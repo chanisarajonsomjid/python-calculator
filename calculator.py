@@ -3,27 +3,32 @@ class Calculator:
         return a + b
 
     def subtract(self, a, b):
-        return b - a
+        return a - b  # Fixed the order of subtraction
 
     def multiply(self, a, b):
         result = 0
-        for i in range(b+1):
+        for _ in range(abs(b)):
             result = self.add(result, a)
-        return result
+        return result if b >= 0 else -result
 
     def divide(self, a, b):
-        result = 0
-        while a > b:
-            a = self.subtract(a, b)
-            result += 1
+        if b == 0:
+            raise ZeroDivisionError("Cannot divide by zero")
+        
+        # Use true division to get a float result
+        result = a / b
         return result
-    
-    def modulo(self, a, b):
-        while a <= b:
-            a = a-b
-        return a
 
-# Example usage:
+    def modulo(self, a, b):
+        if b == 0:
+            raise ZeroDivisionError("Cannot calculate modulo by zero")
+        remainder = abs(a)
+        while remainder >= abs(b):
+            remainder -= abs(b)
+        return remainder if a >= 0 else -remainder
+
+
+# Example usage (optional to test)
 if __name__ == "__main__":
     calc = Calculator()
     print("This is a simple calculator class!")
